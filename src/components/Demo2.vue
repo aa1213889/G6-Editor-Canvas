@@ -14,6 +14,7 @@ export default {
     return {
       graph: null,
       nodeData: null,
+      grid: null,
     };
   },
   mounted() {
@@ -21,13 +22,16 @@ export default {
   },
   methods: {
     gSixOption() {
+      this.grid = new G6.Grid(); //初始化网格
       this.graph = new G6.Graph({
         container: "container", //绑定id
         width: 800,
         height: 800,
         modes: {
-          default: ["drag-combo"],
+          default: ["drag-canvas", "zoom-canvas", "drag-node"], // 允许拖拽画布、放缩画布、拖拽节点
+          addNode: ["click-add-node", "click-select"], // 增加节点交互模式
         },
+        plugins: [this.grid], //grid：背景有网格   还可以放小地图插件
         defaultNode: {
           shape: "circle",
           size: [50],
@@ -46,6 +50,24 @@ export default {
         defaultEdge: {
           style: {
             stroke: "#e2e2e2",
+          },
+        },
+        nodeStateStyles: {
+          // 鼠标 hover 上节点，即 hover 状态为 true 时的样式
+          hover: {
+            fill: "#ffffff",
+          },
+          // 鼠标点击节点，即 click 状态为 true 时的样式
+          click: {
+            stroke: "#000",
+            lineWidth: 3,
+          },
+        },
+        // 边不同状态下的样式集合
+        edgeStateStyles: {
+          // 鼠标点击边，即 click 状态为 true 时的样式
+          click: {
+            stroke: "steelblue",
           },
         },
       });
@@ -82,7 +104,9 @@ export default {
             y: 200, // 节点纵坐标
             label: "点1", // 节点文本
             type: "ellipse",
+            hover: true,
           },
+
           {
             id: "node2",
             x: 300,
@@ -124,31 +148,37 @@ export default {
           {
             source: "node1", // 起始点 id
             target: "node2", // 目标点 id
+            type: "cubic-horizontal", //曲线
             label: "我是连线", // 边的文本
           },
           {
             source: "node2", // 起始点 id
             target: "node3", // 目标点 id
+            type: "cubic-horizontal",
             label: "我是连线", // 边的文本
           },
           {
             source: "node1", // 起始点 id
             target: "node3", // 目标点 id
+            type: "cubic-horizontal",
             label: "我是连线", // 边的文本
           },
           {
             source: "node1", // 起始点 id
             target: "node4", // 目标点 id
+            type: "cubic-horizontal",
             label: "我是连线", // 边的文本
           },
           {
             source: "node2", // 起始点 id
             target: "node4", // 目标点 id
+            type: "cubic-horizontal",
             label: "我是连线", // 边的文本
           },
           {
             source: "node3", // 起始点 id
             target: "node4", // 目标点 id
+            type: "cubic-horizontal",
             label: "我是连线", // 边的文本
           },
         ],
