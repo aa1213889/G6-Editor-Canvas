@@ -24,5 +24,7 @@ export default {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
+  min-width: 800px;
+  min-height: 600px;
 }
 </style>
