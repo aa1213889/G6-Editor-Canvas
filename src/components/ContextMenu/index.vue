@@ -1,9 +1,21 @@
 <template>
-  <div></div>
+  <div class="context-menu">
+    <Header title="节点信息" />
+  </div>
 </template>
 
 <script>
-export default {};
+import Header from "../common/Header";
+export default {
+  components: {
+    Header,
+  },
+};
 </script>
 
-<style></style>
+<style>
+.context-menu {
+  width: 200px;
+  height: 100%;
+}
+</style>
